@@ -49,12 +49,6 @@ func getTlsConfig() (*tls.Config, error) {
 		return nil, fmt.Errorf("Failed reading CA certificate: %v", err)
 	}
 
-	if cert, err := tls.LoadX509KeyPair(path.Join(*certsDir, "/cert.pem"), path.Join(*certsDir, "/key.pem")); err == nil {
-		tlscfg.Certificates = append(tlscfg.Certificates, cert)
-	} else {
-		return nil, fmt.Errorf("Failed reading client certificate: %v", err)
-	}
-
 	tlscfg.ServerName = strings.Split(*targetHost, ":")[0]
 	if *serverName != "" {
 		tlscfg.ServerName = *serverName
